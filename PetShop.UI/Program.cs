@@ -6,7 +6,7 @@ namespace PetShop.UI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var printer = new Printer();
         }
     }
 }
