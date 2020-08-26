@@ -1,4 +1,8 @@
 ﻿using System;
+using PetShop.Core.ApplicationServices;
+using PetShop.Core.ApplicationServices.Services;
+using PetShop.Core.DomainServices;
+using PetShop.InfraStructure.Data;
 
 namespace PetShop.UI
 {
@@ -6,7 +10,9 @@ namespace PetShop.UI
     {
         static void Main(string[] args)
         {
-            var printer = new Printer();
+            IPetRepository _petRepository = new PetRepository();
+            IPetService _petService = new PetService(_petRepository);
+            var printer = new Printer(_petService);
         }
     }
 }

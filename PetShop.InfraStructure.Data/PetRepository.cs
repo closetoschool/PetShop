@@ -6,9 +6,11 @@ namespace PetShop.InfraStructure.Data
 {
     public class PetRepository: IPetRepository
     {
-        public List<Pet> GetPets()
+        private int _id = 1;
+        private List<Pet> _pets = new List<Pet>();
+        public IEnumerable<Pet> ReadPets()
         {
-            throw new System.NotImplementedException();
+            return _pets;
         }
 
         public Pet GetPet(int id)
@@ -18,7 +20,9 @@ namespace PetShop.InfraStructure.Data
 
         public Pet AddPet(Pet pet)
         {
-            throw new System.NotImplementedException();
+            pet.Id = _id++;
+            _pets.Add(pet);
+            return pet;
         }
 
         public Pet UpdatePet(Pet pet)
