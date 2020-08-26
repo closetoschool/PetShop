@@ -15,7 +15,7 @@ namespace PetShop.UI
 
         internal void ListAllPets()
         {
-            List<Pet> pets = _petService.GetPets();
+            var pets = _petService.GetPets();
             foreach (var pet in pets)
             {
                 Console.WriteLine($"Cute {pet.Type} named {pet.Name} has the id {pet.Id} and is {pet.Color} and only costs {pet.Price}");

@@ -10,9 +10,11 @@ namespace PetShop.UI
     {
         static void Main(string[] args)
         {
-            IPetRepository _petRepository = new PetRepository();
-            IPetService _petService = new PetService(_petRepository);
-            var printer = new Printer(_petService);
+            IPetRepository petRepository = new PetRepository();
+            IPetService petService = new PetService(petRepository);
+            var printer = new Printer(petService);
+
+            printer.ListAllPets();
         }
     }
 }
