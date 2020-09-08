@@ -106,6 +106,8 @@ namespace PetShop.UI
             int.TryParse(textId, out var id);
             var pet = _petService.GetPet(id);
             Console.WriteLine($"Cute {pet.Type} named {pet.Name} has the id {pet.Id} and is {pet.Color} and only costs {pet.Price}");
+            Console.WriteLine("Details:");
+            Console.WriteLine($"Id : {pet.Id} | Name {pet.Name}, Type {pet.Type}, Birthday { pet.BirthDate }, SoldDate { pet.SoldDate }, Color {pet.Color}, PreviousOwner {pet.PreviousOwner}, Price {pet.Price}");
         }
 
         private void DeletePet()
