@@ -51,19 +51,7 @@ namespace PetShop.InfraStructure.Data
 
         public Pet ReadPetById(int id)
         {
-            return FakeDB._pets.
-                Select(c => new Pet()
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Type = c.Type,
-                    BirthDate = c.BirthDate,
-                    SoldDate = c.SoldDate,
-                    Color = c.Color,
-                    PreviousOwner = c.PreviousOwner,
-                    Price = c.Price
-                }).
-                FirstOrDefault(c => c.Id == id);
+            return FakeDB._pets.Find(p => p.Id == id);
         }
 
         public List<Pet> SearchPets(string searchField, string searchValue)
