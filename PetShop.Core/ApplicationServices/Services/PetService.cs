@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Microsoft.VisualBasic;
 using PetShop.Core.DomainServices;
 using PetShop.Core.Entity;
 
@@ -22,33 +24,42 @@ namespace PetShop.Core.ApplicationServices.Services
         
         public Pet GetPet(int id)
         {
-            throw new NotImplementedException();
+            return _petRepository.ReadPetById(id);
         }
 
-        public Pet AddPet(string name, string type, DateTime birthdate, DateTime soldDate, string color, string previousOwner,
-            double price)
+        public List<Pet> SearchPets(string searchField, string searchValue)
         {
-            var pet = new Pet
+            if (searchField == null)
             {
-                Name = name,
-                Type = type,
-                BirthDate = birthdate,
-                SoldDate = soldDate,
-                Color = color,
-                PreviousOwner = previousOwner,
-                Price = price,
-            };
+                throw new InvalidDataException("PetSearchFieldCannotBeNull");
+            }
+
+            if (searchValue == null)
+            {
+                throw new InvalidDataException("PetSearchValueCannotBeNull");
+            }
+
+            return _petRepository.SearchPets(searchField, searchValue);
+        }
+
+        public List<Pet> SortByPrice(string direction, int limit = 0)
+        {
+            return _petRepository.SortByPrice(direction, limit);
+        }
+
+        public Pet AddPet(Pet pet) 
+        {
             return _petRepository.AddPet(pet);
         }
 
         public Pet UpdatePet(Pet pet)
         {
-            throw new NotImplementedException();
+            return _petRepository.UpdatePet(pet);
         }
 
-        public Pet DeletePet(Pet pet)
+        public Pet DeletePet(int id)
         {
-            throw new NotImplementedException();
+            return _petRepository.DeletePet(id);
         }
     }
 }

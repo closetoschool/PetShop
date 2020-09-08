@@ -13,7 +13,15 @@ namespace PetShop.UI
             IPetRepository petRepository = new PetRepository();
             IPetService petService = new PetService(petRepository);
             var printer = new Printer(petService);
+            
+            bool showMenu = true;
+            while (showMenu)
+            {
+                showMenu = printer.ShowMenu();
+            }
 
+            printer.ListAllPets();
+            printer.CreatePet();
             printer.ListAllPets();
         }
     }
