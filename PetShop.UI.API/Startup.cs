@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,8 +9,7 @@ using PetShop.Core.ApplicationServices;
 using PetShop.Core.ApplicationServices.Services;
 using PetShop.Core.DomainServices;
 using PetShop.InfraStructure.Data;
-using PetShop.InfraStructure.MSSQL.Data;
-using PetRepository = PetShop.InfraStructure.Data.PetRepository;
+using PetShop.InfraStructure.SQLite.Data;
 
 namespace PetShop.UI.API
 {
@@ -43,6 +43,9 @@ namespace PetShop.UI.API
             
             services.AddScoped<IOwnerService, OwnerService>();
             services.AddScoped<IOwnerRepository, OwnerRepository>();
+            
+            services.AddScoped<ITypeService, TypeService>();
+            services.AddScoped<ITypeRepository, TypeRepository>();
 
             // Ignore JSON model relations loop
             services.AddControllers().AddNewtonsoftJson(o =>
@@ -51,9 +54,9 @@ namespace PetShop.UI.API
                 //o.SerializerSettings.MaxDepth = 5;
             });
 
-            services.AddDbContext<PetShopContext>(opt =>
+            services.AddDbContext<PetShopLiteContext>(opt =>
             {
-                //opt.UseSqlite("Data Source=petShop.db");
+                opt.UseSqlite("Data Source=petShop.db");
             });
         }
 
