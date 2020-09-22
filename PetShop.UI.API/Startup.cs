@@ -69,7 +69,13 @@ namespace PetShop.UI.API
 
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
-                    //var ctx = scope.ServiceProvider.GetService()
+                    var ctx = scope.ServiceProvider.GetService<PetShopLiteContext>();
+                    ctx.Database.EnsureDeleted();
+                    ctx.Database.EnsureCreated();
+                    var petRepository = scope.ServiceProvider.GetService<IPetRepository>();
+                    var ownerRepository = scope.ServiceProvider.GetService<IOwnerRepository>();
+                    var typeRepository = scope.ServiceProvider.GetService<ITypeRepository>();
+                    //new DBInitializer(petRepository, ownerRepository, typeRepository).InitData();
                 }
             }
 

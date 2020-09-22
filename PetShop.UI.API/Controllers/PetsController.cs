@@ -53,7 +53,7 @@ namespace PetShop.UI.API.Controllers
         {
             if (id < 1 || id != pet.Id)
             {
-                return BadRequest("Parameter Id and order ID must be the same");
+                return BadRequest("Parameter Id and pet ID must be the same");
             }
 
             return Ok(_petService.UpdatePet(pet));

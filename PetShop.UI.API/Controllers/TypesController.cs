@@ -7,7 +7,7 @@ using Type = PetShop.Core.Entity.Type;
 namespace PetShop.UI.API.Controllers
 {
     [ApiController]
-    [Route("api/pettype")]
+    [Route("api/[controller]")]
     
     public class TypesController : ControllerBase
     {
