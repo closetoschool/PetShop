@@ -12,46 +12,41 @@ namespace PetShop.InfraStructure.Data
 
         public PetRepository()
         {
-            InitData();
+            //InitData();
         }
 
         private void InitData()
         {
-            FakeDB._pets = new List<Pet>
+            FakeDb.Pets.Add(new Pet
             {
-                new Pet
-                {
-                    Id = FakeDB._id++,
-                    Name = "Mickey",
-                    Type = "Mouse",
-                    BirthDate = DateTime.Now.AddYears(-5),
-                    SoldDate = DateTime.Now.AddYears(-1),
-                    Color = "Black",
-                    PreviousOwner = "Disney",
-                    Price = 10000000,
-                },
-                new Pet
-                {
-                    Id = FakeDB._id++,
-                    Name = "Pluto",
-                    Type = "Dog",
-                    BirthDate = DateTime.Now.AddYears(-4),
-                    SoldDate = DateTime.Now.AddYears(-2),
-                    Color = "Brown",
-                    PreviousOwner = "Mickey",
-                    Price = 10000,
-                }
-            };
+                Id = FakeDb.PetId++,
+                Name = "Mickey",
+                BirthDate = DateTime.Now.AddYears(-5),
+                SoldDate = DateTime.Now.AddYears(-1),
+                Color = "Black",
+                PreviousOwner = "Disney",
+                Price = 10000000,
+            });
+            FakeDb.Pets.Add(new Pet
+            {
+                Id = FakeDb.PetId++,
+                Name = "Pluto",
+                BirthDate = DateTime.Now.AddYears(-4),
+                SoldDate = DateTime.Now.AddYears(-2),
+                Color = "Brown",
+                PreviousOwner = "Mickey",
+                Price = 10000,
+            });
         }
 
         public IEnumerable<Pet> ReadPets()
         {
-            return FakeDB._pets;
+            return FakeDb.Pets;
         }
 
         public Pet ReadPetById(int id)
         {
-            return FakeDB._pets.Find(p => p.Id == id);
+            return FakeDb.Pets.FirstOrDefault(p => p.Id == id);
         }
 
         public List<Pet> SearchPets(string searchField, string searchValue)
@@ -83,8 +78,6 @@ namespace PetShop.InfraStructure.Data
                     throw new InvalidDataException("PetSearchValueWithFieldTypeIdMustBeANumber");
                 case "name":
                     return ReadPets().ToList().FindAll(pet => pet?.Name == searchValue);
-                case "type":
-                    return ReadPets().ToList().FindAll(pet => pet?.Type == searchValue);
                 case "birthday":
                     DateTime.TryParse(searchValue, out var birth);
                     return ReadPets().ToList().FindAll(pet => pet?.BirthDate == birth);
@@ -121,31 +114,30 @@ namespace PetShop.InfraStructure.Data
 
         public Pet AddPet(Pet pet)
         {
-            pet.Id = FakeDB._id++;
-            FakeDB._pets.Add(pet);
+            pet.Id = FakeDb.PetId++;
+            FakeDb.Pets.Add(pet);
             return pet;
         }
 
         public Pet UpdatePet(Pet pet)
         {
-            var PetFromDB = ReadPetById(pet.Id);
-            if (PetFromDB == null) return null;
-            PetFromDB.Id = pet.Id;
-            PetFromDB.Name = pet.Name;
-            PetFromDB.Type = pet.Type;
-            PetFromDB.BirthDate = pet.BirthDate;
-            PetFromDB.SoldDate = pet.SoldDate;
-            PetFromDB.Color = pet.Color;
-            PetFromDB.PreviousOwner = pet.PreviousOwner;
-            PetFromDB.Price = pet.Price;
-            return PetFromDB;
+            var petFromDb = ReadPetById(pet.Id);
+            if (petFromDb == null) return null;
+            petFromDb.Id = pet.Id;
+            petFromDb.Name = pet.Name;
+            petFromDb.BirthDate = pet.BirthDate;
+            petFromDb.SoldDate = pet.SoldDate;
+            petFromDb.Color = pet.Color;
+            petFromDb.PreviousOwner = pet.PreviousOwner;
+            petFromDb.Price = pet.Price;
+            return petFromDb;
         }
         
         public Pet DeletePet(int id)
         {
             var pet = ReadPetById(id);
             if (pet == null) return null;
-            FakeDB._pets.Remove(pet);
+            FakeDb.Pets.Remove(pet);
             return pet;
         }
     }

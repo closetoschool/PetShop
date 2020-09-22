@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using PetShop.Core.ApplicationServices;
 using PetShop.Core.Entity;
 
@@ -95,7 +94,7 @@ namespace PetShop.UI
             
             foreach (var pet in pets)
             {
-                Console.WriteLine($"Id : {pet.Id} | Name {pet.Name}, Type {pet.Type}, Birthday { pet.BirthDate }, SoldDate { pet.SoldDate }, Color {pet.Color}, PreviousOwner {pet.PreviousOwner}, Price {pet.Price}");
+                Console.WriteLine($"Id : {pet.Id} | Name {pet.Name}, Birthday { pet.BirthDate }, SoldDate { pet.SoldDate }, Color {pet.Color}, PreviousOwner {pet.PreviousOwner}, Price {pet.Price}");
             }
         }
 
@@ -105,9 +104,9 @@ namespace PetShop.UI
             var textId = Console.ReadLine();
             int.TryParse(textId, out var id);
             var pet = _petService.GetPet(id);
-            Console.WriteLine($"Cute {pet.Type} named {pet.Name} has the id {pet.Id} and is {pet.Color} and only costs {pet.Price}");
+            Console.WriteLine($"Pet named {pet.Name} has the id {pet.Id} and is {pet.Color} and only costs {pet.Price}");
             Console.WriteLine("Details:");
-            Console.WriteLine($"Id : {pet.Id} | Name {pet.Name}, Type {pet.Type}, Birthday { pet.BirthDate }, SoldDate { pet.SoldDate }, Color {pet.Color}, PreviousOwner {pet.PreviousOwner}, Price {pet.Price}");
+            Console.WriteLine($"Id : {pet.Id} | Name {pet.Name}, Birthday { pet.BirthDate }, SoldDate { pet.SoldDate }, Color {pet.Color}, PreviousOwner {pet.PreviousOwner}, Price {pet.Price}");
         }
 
         private void DeletePet()
@@ -116,7 +115,7 @@ namespace PetShop.UI
             var textId = Console.ReadLine();
             int.TryParse(textId, out var id);
             var pet = _petService.DeletePet(id);
-            Console.WriteLine($"Poor { pet.Type } named { pet.Name } has been deleted");
+            Console.WriteLine($"Pet named { pet.Name } has been deleted");
         }
 
         private void UpdatePet()
@@ -126,12 +125,10 @@ namespace PetShop.UI
             int.TryParse(textId, out var id);
             var pet = _petService.GetPet(id);
             Console.WriteLine($"You wish to update pet with following details:");
-            Console.WriteLine($"Name {pet.Name}, Type {pet.Type}, Birthday { pet.BirthDate }, SoldDate { pet.SoldDate }, Color {pet.Color}, PreviousOwner {pet.PreviousOwner}, Price {pet.Price}");
+            Console.WriteLine($"Name {pet.Name}, Birthday { pet.BirthDate }, SoldDate { pet.SoldDate }, Color {pet.Color}, PreviousOwner {pet.PreviousOwner}, Price {pet.Price}");
             Console.WriteLine("Update the values:");
             Console.WriteLine("Type Pet Name");
             var name = Console.ReadLine();
-            Console.WriteLine("Type Pet Type");
-            var type = Console.ReadLine();
             Console.WriteLine("Type Pet Birthday");
             var birthday = Console.ReadLine();
             Console.WriteLine("Type Pet SoldDate");
@@ -148,7 +145,6 @@ namespace PetShop.UI
             double.TryParse(price, out var parsedPrice);
 
             pet.Name = name;
-            pet.Type = type;
             pet.BirthDate = parsedBirthday;
             pet.SoldDate = parsedSoldDate;
             pet.Color = color;
@@ -157,13 +153,13 @@ namespace PetShop.UI
 
             var updatedPet = _petService.UpdatePet(pet);
             Console.WriteLine("Pet has been updated, and now has the following values:");
-            Console.WriteLine($"Name {updatedPet.Name}, Type {updatedPet.Type}, Birthday { updatedPet.BirthDate }, SoldDate { updatedPet.SoldDate }, Color {updatedPet.Color}, PreviousOwner {updatedPet.PreviousOwner}, Price {updatedPet.Price}");
+            Console.WriteLine($"Name {updatedPet.Name}, Birthday { updatedPet.BirthDate }, SoldDate { updatedPet.SoldDate }, Color {updatedPet.Color}, PreviousOwner {updatedPet.PreviousOwner}, Price {updatedPet.Price}");
         }
 
         private void SearchPet()
         {
             Console.WriteLine("Please enter search field");
-            Console.WriteLine("You can search in id, name, type, birthday, solddate, color, previousowner and price");
+            Console.WriteLine("You can search in id, name, birthday, solddate, color, previousowner and price");
             var searchField = Console.ReadLine();
             Console.WriteLine("Please enter search value");
             var searchValue = Console.ReadLine();
@@ -171,7 +167,7 @@ namespace PetShop.UI
             Console.WriteLine($"We found { pets.Count } pet(s)");
             foreach (var pet in pets)
             {
-                Console.WriteLine($"Id : {pet.Id} | Name {pet.Name}, Type {pet.Type}, Birthday { pet.BirthDate }, SoldDate { pet.SoldDate }, Color {pet.Color}, PreviousOwner {pet.PreviousOwner}, Price {pet.Price}");
+                Console.WriteLine($"Id : {pet.Id} | Name {pet.Name}, Birthday { pet.BirthDate }, SoldDate { pet.SoldDate }, Color {pet.Color}, PreviousOwner {pet.PreviousOwner}, Price {pet.Price}");
             }
         }
 
@@ -180,7 +176,7 @@ namespace PetShop.UI
             var pets = _petService.GetPets();
             foreach (var pet in pets)
             {
-                Console.WriteLine($"Id: {pet.Id} | Cute {pet.Type} named {pet.Name} has the id {pet.Id} and is {pet.Color} and only costs {pet.Price}");
+                Console.WriteLine($"Id: {pet.Id} | Pet named {pet.Name} has the id {pet.Id} and is {pet.Color} and only costs {pet.Price}");
             }
         }
 
@@ -188,8 +184,6 @@ namespace PetShop.UI
         {
             Console.WriteLine("Type Pet Name");
             var name = Console.ReadLine();
-            Console.WriteLine("Type Pet Type");
-            var type = Console.ReadLine();
             Console.WriteLine("Type Pet Birthday");
             var birthday = Console.ReadLine();
             Console.WriteLine("Type Pet SoldDate");
@@ -209,7 +203,6 @@ namespace PetShop.UI
                 new Pet
                 {
                     Name = name,
-                    Type = type,
                     BirthDate = parsedBirthday,
                     SoldDate = parsedSoldDate,
                     Color = color,

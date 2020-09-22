@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using PetShop.Core.ApplicationServices;
 using PetShop.Core.Entity;
@@ -16,7 +15,7 @@ namespace PetShop.UI.API.Controllers
 
         public PetsController(IPetService petService)
         {
-            _petService = petService;
+            _petService = petService; 
         }
             
         [HttpGet]
