@@ -29,8 +29,12 @@ namespace PetShop.UI.API.Controllers
         public ActionResult<Owner> Get(int id)
         {
             if (id < 1) return BadRequest("Id must be greater then 0");
+
+            var owner = _ownerService.GetOwner(id);
             
-            return Ok(_ownerService.GetOwner(id));
+            if(owner == null) return NotFound(); 
+            
+            return Ok(owner);
         }
         
         // POST api/owners -- CREATE
@@ -39,7 +43,9 @@ namespace PetShop.UI.API.Controllers
         {
             try
             {
-                return Ok(_ownerService.AddOwner(owner));
+                //return Ok(_ownerService.AddOwner(owner));
+                var ownerFromDb = _ownerService.AddOwner(owner);
+                return Created($"api/owners/{ownerFromDb.Id}", ownerFromDb);
             }
             catch (Exception e)
             {
@@ -51,20 +57,28 @@ namespace PetShop.UI.API.Controllers
         [HttpPut("{id}")]
         public ActionResult<Owner> Put(int id, [FromBody] Owner owner)
         {
-            if (id < 1 || id != owner.Id)
+            if (id < 1) return BadRequest("Id must be greater then 0");
+            
+            if (id != owner.Id)
             {
                 return BadRequest("Parameter Id and order ID must be the same");
             }
+            
+            if (_ownerService.GetOwner(id) == null) return NotFound();
 
-            return Ok(_ownerService.UpdateOwner(owner));
+            return Accepted(_ownerService.UpdateOwner(owner));
         }
         
         // DELETE api/owners/5
         [HttpDelete("{id}")]
         public ActionResult<Owner> Delete(int id)
         {
+            if (id < 1) return BadRequest("Id must be greater then 0");
+            
+            if (_ownerService.GetOwner(id) == null) return NotFound();
+            
             _ownerService.DeleteOwner(id);
-            return Ok($"Owner with Id: {id} is Deleted");
+            return Accepted($"Owner with Id: {id} is Deleted");
         }
         
     }
